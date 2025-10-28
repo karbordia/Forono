@@ -61,14 +61,14 @@ jobs:
 
           # Control file
           cat <<EOF > package/DEBIAN/control
-Package: forono
-Version: 1.0.0
-Section: utils
-Priority: optional
-Architecture: amd64
-Maintainer: Ahmadreza Bashari <support@ahmadrezam.ir>
-Description: Shortcut Maker for Linux by Forono.
-EOF
+          Package: forono
+          Version: 1.0.0
+          Section: utils
+          Priority: optional
+          Architecture: amd64
+          Maintainer: Ahmadreza Bashari <support@ahmadrezam.ir>
+          Description: Shortcut Maker for Linux by Forono.
+          EOF
 
       - name: Build DEB package
         run: |
