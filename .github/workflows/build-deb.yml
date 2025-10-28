@@ -18,26 +18,57 @@ jobs:
         with:
           python-version: 3.11
 
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt update
-          sudo apt install -y python3-pyqt5 dpkg-dev fakeroot
+          sudo apt install -y python3-pyqt5 python3-pip dpkg-dev fakeroot
 
-      - name: Prepare DEB directory
+      - name: Install PyInstaller
         run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+
+      - name: Build executable with PyInstaller
+        run: |
+          pyinstaller --onefile --windowed forono.py
+          ls -lh dist/
+
+      - name: Prepare DEB package
+        run: |
+          # Create directory structure
           mkdir -p package/DEBIAN
           mkdir -p package/usr/local/bin
           mkdir -p package/usr/share/icons/hicolor/256x256/apps
+          mkdir -p package/usr/share/applications
 
-          # Copy executable
-          cp forono.py package/usr/local/bin/forono
+          # Copy the PyInstaller binary
+          cp dist/forono package/usr/local/bin/forono
           chmod 755 package/usr/local/bin/forono
 
           # Copy logo
           cp images/logo.jpg package/usr/share/icons/hicolor/256x256/apps/forono.jpg
 
-          # Copy control file
-          cp deb/DEBIAN/control package/DEBIAN/control
+          # Create desktop entry
+          cat <<EOF > package/usr/share/applications/forono.desktop
+[Desktop Entry]
+Type=Application
+Name=Forono
+Exec=/usr/local/bin/forono
+Icon=/usr/share/icons/hicolor/256x256/apps/forono.jpg
+Terminal=false
+Categories=Utility;
+EOF
+
+          # Control file
+          cat <<EOF > package/DEBIAN/control
+Package: forono
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: Ahmadreza Bashari <support@ahmadrezam.ir>
+Description: Shortcut Maker for Linux by Forono.
+EOF
 
       - name: Build DEB package
         run: |
