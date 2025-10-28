@@ -34,7 +34,7 @@ jobs:
           chmod 755 package/usr/local/bin/forono
 
           # Copy logo
-          cp images/logo.png package/usr/share/icons/hicolor/256x256/apps/forono.png
+          cp images/logo.jpg package/usr/share/icons/hicolor/256x256/apps/forono.jpg
 
           # Copy control file
           cp deb/DEBIAN/control package/DEBIAN/control
