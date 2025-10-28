@@ -30,7 +30,7 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --onefile --windowed forono.py
+          pyinstaller --onefile --hidden-import=PyQt5 --windowed forono.py
           ls -lh dist/
 
       - name: Prepare DEB package
