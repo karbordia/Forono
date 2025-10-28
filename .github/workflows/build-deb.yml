@@ -50,14 +50,14 @@ jobs:
 
           # Create desktop entry
           cat <<EOF > package/usr/share/applications/forono.desktop
-[Desktop Entry]
-Type=Application
-Name=Forono
-Exec=/usr/local/bin/forono
-Icon=/usr/share/icons/hicolor/256x256/apps/forono.jpg
-Terminal=false
-Categories=Utility;
-EOF
+          [Desktop Entry]
+          Type=Application
+          Name=Forono
+          Exec=/usr/local/bin/forono
+          Icon=/usr/share/icons/hicolor/256x256/apps/forono.jpg
+          Terminal=false
+          Categories=Utility;
+          EOF
 
           # Control file
           cat <<EOF > package/DEBIAN/control
