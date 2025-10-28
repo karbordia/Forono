@@ -12,7 +12,7 @@
 
 ## Installation
 
-1. Download the latest `.deb` package from the [Releases](#) page.
+1. Download the latest `.deb` package from the [Releases](https://github.com/karbordia/Forono/releases/tag/v1.0.0) page.
 2. Install using:
 
 ```bash
