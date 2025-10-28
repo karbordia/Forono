@@ -1,0 +1,51 @@
+name: Build .deb Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deb:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pyqt5 dpkg-dev fakeroot
+
+      - name: Prepare DEB directory
+        run: |
+          mkdir -p package/DEBIAN
+          mkdir -p package/usr/local/bin
+          mkdir -p package/usr/share/icons/hicolor/256x256/apps
+
+          # Copy executable
+          cp forono.py package/usr/local/bin/forono
+          chmod 755 package/usr/local/bin/forono
+
+          # Copy logo
+          cp images/logo.png package/usr/share/icons/hicolor/256x256/apps/forono.png
+
+          # Copy control file
+          cp deb/DEBIAN/control package/DEBIAN/control
+
+      - name: Build DEB package
+        run: |
+          dpkg-deb --build package
+          ls -lh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: forono-deb
+          path: package.deb
